@@ -87,20 +87,12 @@ const generateNewComment = () => ({
   name: getRandomArrayElement(NAMES)
 });
 
-const generateCommentList = (commentCount) => {
-  const comments = [];
-  for (let count = 0; count < commentCount; count++) {
-    comments.push(generateNewComment());
-  }
-  return comments;
-};
-
 const generateNewPhoto = () => ({
   id: generatePhotoId(),
   url: generateUrl(),
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: generateRandomInteger(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
-  comments: generateCommentList(generateRandomInteger(MIN_COMMENT_ID_COUNT, MAX_COMMENT_ID_COUNT))
+  comments: Array.from({length:generateRandomInteger(MIN_COMMENT_ID_COUNT, MAX_COMMENT_ID_COUNT)}, generateNewComment)
 });
 
 // eslint-disable-next-line no-unused-vars
