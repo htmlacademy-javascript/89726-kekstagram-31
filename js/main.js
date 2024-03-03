@@ -1,5 +1,13 @@
 const PHOTO_COUNT = 25;
 
+const DESCRIPTIONS = [
+  'Ах, какой рассвет!',
+  'На вечеринке с друзьями',
+  'Всей семьей гоняли на природу',
+  'Как же похорошела Рязань!',
+  'Yet another photo'
+];
+
 const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -85,9 +93,10 @@ const generateCommentList = (commentCount) => {
 const generateNewPhoto = () => ({
   id: generatePhotoId(),
   url: generateUrl(),
-  description: 'Yet another photo',
+  description: getRandomArrayElement(DESCRIPTIONS),
   likes: generateRandomInteger(15, 200),
   comments: generateCommentList(generateRandomInteger(0, 30))
 });
 
+// eslint-disable-next-line no-unused-vars
 const photos = Array.from({length: PHOTO_COUNT}, generateNewPhoto);
