@@ -53,13 +53,12 @@ const generateCommentId = () => {
 const generateNewComment = () => () => {
   const avatarId = generateRandomInteger(MIN_AVATAR_COUNT, MAX_AVATAR_COUNT);
 
-  const comment = {
+  return {
     id: generateCommentId(),
     avatar: `img/avatar-${avatarId}.svg`,
     message: getRandomArrayElement(MESSAGES),
     name: getRandomArrayElement(NAMES)
   };
-  return comment;
 };
 
 const generateNewPhoto = () => {
