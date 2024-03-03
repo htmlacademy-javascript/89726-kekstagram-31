@@ -22,53 +22,46 @@ const generateRandomInteger = (min, max) => Math.floor(Math.random() * (max - mi
 
 const getRandomArrayElement = (elements) => elements[generateRandomInteger(0, elements.length - 1)];
 
-const generatePhotoId = () => {
+const generateRandomId = (maxCount) => {
   const usedValues = [];
-  let currentValue = generateRandomInteger(1, 25);
+  let currentValue = generateRandomInteger(1, maxCount);
   if (usedValues.length >= PHOTO_COUNT) {
     return null;
   }
   while (usedValues. includes(currentValue)) {
-    currentValue = generateRandomInteger(1, 25);
+    currentValue = generateRandomInteger(1, maxCount);
   }
   usedValues.push(currentValue);
   return currentValue;
 };
 
-const generateCommentId = () => {
-  const usedValues = [];
-  let currentValue = generateRandomInteger(1, 1000);
-  if (usedValues.length >= 1000) {
-    return null;
-  }
-  while (usedValues. includes(currentValue)) {
-    currentValue = generateRandomInteger(1, 1000);
-  }
-  usedValues.push(currentValue);
-  return currentValue;
-};
+const generatePhotoId = () => generateRandomId(PHOTO_COUNT);
+
+const generateCommentId = () => generateRandomId(1000);
 
 const generateUrl = () => {
+  const maxCount = 25;
   const usedValues = [];
-  let currentValue = generateRandomInteger(1, 25);
+  let currentValue = generateRandomInteger(1, maxCount);
   if (usedValues.length >= PHOTO_COUNT) {
     return null;
   }
   while (usedValues. includes(currentValue)) {
-    currentValue = generateRandomInteger(1, 25);
+    currentValue = generateRandomInteger(1, maxCount);
   }
   usedValues.push(currentValue);
   return `photos/${ currentValue }.jpg`;
 };
 
 const generateAvatar = () => {
+  const maxCount = 6;
   const usedValues = [];
-  let currentValue = generateRandomInteger(1, 6);
-  if (usedValues.length >= 6) {
+  let currentValue = generateRandomInteger(1, maxCount);
+  if (usedValues.length >= maxCount) {
     return null;
   }
   while (usedValues. includes(currentValue)) {
-    currentValue = generateRandomInteger(1, 6);
+    currentValue = generateRandomInteger(1, maxCount);
   }
   usedValues.push(currentValue);
   return `img/avatar-${ currentValue }.svg`;
