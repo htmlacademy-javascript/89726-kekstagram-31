@@ -3,9 +3,9 @@ const MIN_LIKES_COUNT = 15;
 const MAX_LIKES_COUNT = 200;
 const MIN_COMMENTS = 0;
 const MAX_COMMENTS = 30;
-const MAX_COMMENT_ID_COUNT = 1000;
+const MAX_COMMENT_ID_COUNT = 5000;
+const MIN_AVATAR_COUNT = 1;
 const MAX_AVATAR_COUNT = 6;
-const MAX_URL_ID_COUNT = 25;
 
 const DESCRIPTIONS = [
   'Ах, какой рассвет!',
@@ -37,63 +37,49 @@ const generateRandomInteger = (min, max) => Math.floor(Math.random() * (max - mi
 
 const getRandomArrayElement = (elements) => elements[generateRandomInteger(0, elements.length - 1)];
 
-const generateRandomId = (maxCount) => {
+const generateCommentId = () => {
   const usedValues = [];
-  let currentValue = generateRandomInteger(1, maxCount);
-  if (usedValues.length >= PHOTO_COUNT) {
+  let currentValue = generateRandomInteger(1, MAX_COMMENT_ID_COUNT);
+  if (usedValues.length >= MAX_COMMENT_ID_COUNT) {
     return null;
   }
   while (usedValues. includes(currentValue)) {
-    currentValue = generateRandomInteger(1, maxCount);
+    currentValue = generateRandomInteger(1, MAX_COMMENT_ID_COUNT);
   }
   usedValues.push(currentValue);
   return currentValue;
 };
 
-const generatePhotoId = () => generateRandomId(PHOTO_COUNT);
+const generateNewComment = () => () => {
+  const avatarId = generateRandomInteger(MIN_AVATAR_COUNT, MAX_AVATAR_COUNT);
 
-const generateCommentId = () => generateRandomId(MAX_COMMENT_ID_COUNT);
-
-const generateUrl = () => {
-  const usedValues = [];
-  let currentValue = generateRandomInteger(1, MAX_URL_ID_COUNT);
-  if (usedValues.length >= PHOTO_COUNT) {
-    return null;
-  }
-  while (usedValues. includes(currentValue)) {
-    currentValue = generateRandomInteger(1, MAX_URL_ID_COUNT);
-  }
-  usedValues.push(currentValue);
-  return `photos/${ currentValue }.jpg`;
+  const comment = {
+    id: generateCommentId(),
+    avatar: `img/avatar-${avatarId}.svg`,
+    message: getRandomArrayElement(MESSAGES),
+    name: getRandomArrayElement(NAMES)
+  };
+  return comment;
 };
 
-const generateAvatar = () => {
-  const usedValues = [];
-  let currentValue = generateRandomInteger(1, MAX_AVATAR_COUNT);
-  if (usedValues.length >= MAX_AVATAR_COUNT) {
-    return null;
-  }
-  while (usedValues. includes(currentValue)) {
-    currentValue = generateRandomInteger(1, MAX_AVATAR_COUNT);
-  }
-  usedValues.push(currentValue);
-  return `img/avatar-${ currentValue }.svg`;
+const generateNewPhoto = () => {
+  let id = 1;
+
+  return () => {
+    const photo = {
+      id: id,
+      url: `photos/${id}.jpg`,
+      description: getRandomArrayElement(DESCRIPTIONS),
+      likes: generateRandomInteger(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
+      comments: Array.from({length: generateRandomInteger(MIN_COMMENTS, MAX_COMMENTS)}, generateNewComment())
+    };
+
+    id++;
+    return photo;
+  };
 };
 
-const generateNewComment = () => ({
-  id: generateCommentId(),
-  avatar: generateAvatar(),
-  message: getRandomArrayElement(MESSAGES),
-  name: getRandomArrayElement(NAMES)
-});
+const photos = Array.from({length: PHOTO_COUNT}, generateNewPhoto());
 
-const generateNewPhoto = () => ({
-  id: generatePhotoId(),
-  url: generateUrl(),
-  description: getRandomArrayElement(DESCRIPTIONS),
-  likes: generateRandomInteger(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
-  comments: Array.from({length:generateRandomInteger(MIN_COMMENTS, MAX_COMMENTS)}, generateNewComment)
-});
-
-// eslint-disable-next-line no-unused-vars
-const photos = Array.from({length: PHOTO_COUNT}, generateNewPhoto);
+// eslint-disable-next-line no-console
+console.log(photos);
