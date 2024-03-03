@@ -1,4 +1,11 @@
 const PHOTO_COUNT = 25;
+const MIN_LIKES_COUNT = 15;
+const MAX_LIKES_COUNT = 200;
+const MIN_COMMENTS = 0;
+const MAX_COMMENTS = 30;
+const MAX_COMMENT_ID_COUNT = 1000;
+const MAX_AVATAR_COUNT = 6;
+const MAX_URL_ID_COUNT = 25;
 
 const DESCRIPTIONS = [
   'Ах, какой рассвет!',
@@ -45,31 +52,29 @@ const generateRandomId = (maxCount) => {
 
 const generatePhotoId = () => generateRandomId(PHOTO_COUNT);
 
-const generateCommentId = () => generateRandomId(1000);
+const generateCommentId = () => generateRandomId(MAX_COMMENT_ID_COUNT);
 
 const generateUrl = () => {
-  const maxCount = 25;
   const usedValues = [];
-  let currentValue = generateRandomInteger(1, maxCount);
+  let currentValue = generateRandomInteger(1, MAX_URL_ID_COUNT);
   if (usedValues.length >= PHOTO_COUNT) {
     return null;
   }
   while (usedValues. includes(currentValue)) {
-    currentValue = generateRandomInteger(1, maxCount);
+    currentValue = generateRandomInteger(1, MAX_URL_ID_COUNT);
   }
   usedValues.push(currentValue);
   return `photos/${ currentValue }.jpg`;
 };
 
 const generateAvatar = () => {
-  const maxCount = 6;
   const usedValues = [];
-  let currentValue = generateRandomInteger(1, maxCount);
-  if (usedValues.length >= maxCount) {
+  let currentValue = generateRandomInteger(1, MAX_AVATAR_COUNT);
+  if (usedValues.length >= MAX_AVATAR_COUNT) {
     return null;
   }
   while (usedValues. includes(currentValue)) {
-    currentValue = generateRandomInteger(1, maxCount);
+    currentValue = generateRandomInteger(1, MAX_AVATAR_COUNT);
   }
   usedValues.push(currentValue);
   return `img/avatar-${ currentValue }.svg`;
@@ -82,20 +87,12 @@ const generateNewComment = () => ({
   name: getRandomArrayElement(NAMES)
 });
 
-const generateCommentList = (commentCount) => {
-  const comments = [];
-  for (let count = 0; count < commentCount; count++) {
-    comments.push(generateNewComment());
-  }
-  return comments;
-};
-
 const generateNewPhoto = () => ({
   id: generatePhotoId(),
   url: generateUrl(),
   description: getRandomArrayElement(DESCRIPTIONS),
-  likes: generateRandomInteger(15, 200),
-  comments: generateCommentList(generateRandomInteger(0, 30))
+  likes: generateRandomInteger(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
+  comments: Array.from({length:generateRandomInteger(MIN_COMMENTS, MAX_COMMENTS)}, generateNewComment)
 });
 
 // eslint-disable-next-line no-unused-vars
