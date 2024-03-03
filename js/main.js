@@ -1,9 +1,9 @@
 const PHOTO_COUNT = 25;
 const MIN_LIKES_COUNT = 15;
 const MAX_LIKES_COUNT = 200;
-const MIN_COMMENT_ID_COUNT = 0;
-const MAX_COMMENT_ID_COUNT = 30;
-const MAX_COMMENT_COUNT = 1000;
+const MIN_COMMENTS = 0;
+const MAX_COMMENTS = 30;
+const MAX_COMMENT_ID_COUNT = 1000;
 const MAX_AVATAR_COUNT = 6;
 const MAX_URL_ID_COUNT = 25;
 
@@ -52,7 +52,7 @@ const generateRandomId = (maxCount) => {
 
 const generatePhotoId = () => generateRandomId(PHOTO_COUNT);
 
-const generateCommentId = () => generateRandomId(MAX_COMMENT_COUNT);
+const generateCommentId = () => generateRandomId(MAX_COMMENT_ID_COUNT);
 
 const generateUrl = () => {
   const usedValues = [];
@@ -92,7 +92,7 @@ const generateNewPhoto = () => ({
   url: generateUrl(),
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: generateRandomInteger(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
-  comments: Array.from({length:generateRandomInteger(MIN_COMMENT_ID_COUNT, MAX_COMMENT_ID_COUNT)}, generateNewComment)
+  comments: Array.from({length:generateRandomInteger(MIN_COMMENTS, MAX_COMMENTS)}, generateNewComment)
 });
 
 // eslint-disable-next-line no-unused-vars
