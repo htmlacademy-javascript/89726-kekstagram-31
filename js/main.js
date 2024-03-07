@@ -1,3 +1,3 @@
-import { generatePhotoList } from "./data.js";
+import { generatePhotoList } from './data.js';
 
 window.console.log(generatePhotoList());

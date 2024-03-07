@@ -1,4 +1,4 @@
-import {getRandomArrayElement, generateRandomInteger} from "./util.js";
+import {getRandomArrayElement, generateRandomInteger} from './util.js';
 
 const PHOTO_COUNT = 25;
 const MIN_LIKES_COUNT = 15;
@@ -76,6 +76,8 @@ const generateNewPhoto = () => {
   };
 };
 
-const generatePhotoList = () => { Array.from({length: PHOTO_COUNT}, generateNewPhoto())};
+const generatePhotoList = () => {
+  Array.from({length: PHOTO_COUNT}, generateNewPhoto());
+};
 
 export {generatePhotoList};
