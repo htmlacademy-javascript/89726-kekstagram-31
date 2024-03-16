@@ -3,8 +3,6 @@ const picture = pictureTemplate.firstElementChild;
 const picturesContainer = document.querySelector('.pictures');
 const fragment = new DocumentFragment();
 
-// const generatedPhotos = generatePhotoList();
-
 function renderPhoto({url, description, likes, comments}) {
   const photo = picture.cloneNode(true);
   photo.querySelector('.picture__img').src = url;
