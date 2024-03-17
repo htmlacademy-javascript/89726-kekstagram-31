@@ -1,6 +1,16 @@
 const pictureTemplate = document.querySelector('#picture').content.firstElementChild;
 const picturesContainer = document.querySelector('.pictures');
 
+function openBigPictureHandler() {
+  picturesContainer.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    if (evt.target.classList.contains('picture__img')) {
+      const bigPicture = document.querySelector('.big-picture');
+      bigPicture.classList.remove('hidden');
+    }
+  });
+}
+
 function renderPhoto({url, description, likes, comments}) {
   const photo = pictureTemplate.cloneNode(true);
   photo.querySelector('.picture__img').src = url;
@@ -15,6 +25,7 @@ function renderPhotos(photos) {
     const photoElement = renderPhoto(photo);
     fragment.appendChild(photoElement);
   });
+  openBigPictureHandler();
   picturesContainer.appendChild(fragment);
 }
 
