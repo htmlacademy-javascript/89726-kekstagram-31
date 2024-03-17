@@ -6,6 +6,15 @@ function openBigPictureHandler() {
     evt.preventDefault();
     if (evt.target.classList.contains('picture__img')) {
       const bigPicture = document.querySelector('.big-picture');
+      const picture = document.querySelector('.big-picture__img img');
+      const likes = document.querySelector('.likes-count');
+      picture.src = evt.target.src;
+      picture.alt = evt.target.alt;
+      console.log(evt.target);
+
+      likes.textContent = evt.target.innerHTML.likes;
+
+
       bigPicture.classList.remove('hidden');
     }
   });
