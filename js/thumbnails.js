@@ -1,3 +1,4 @@
+import { photosDataset } from './data.js';
 const pictureTemplate = document.querySelector('#picture').content.firstElementChild;
 const picturesContainer = document.querySelector('.pictures');
 
@@ -7,12 +8,18 @@ function openBigPictureHandler() {
     if (evt.target.classList.contains('picture__img')) {
       const bigPicture = document.querySelector('.big-picture');
       const picture = document.querySelector('.big-picture__img img');
-      const likes = document.querySelector('.likes-count');
-      picture.src = evt.target.src;
-      picture.alt = evt.target.alt;
-      console.log(evt.target);
+      const likesCount = bigPicture.querySelector('.likes-count');
+      const commentCount = bigPicture.querySelector('.social__comment-total-count');
+      const caption = bigPicture.querySelector('.social__caption');
 
-      likes.textContent = evt.target.innerHTML.likes;
+      const srcImgId = evt.target.closest('.picture').dataset.id;
+      const srcPhoto = photosDataset.find((element) => Number(element.id) === Number(srcImgId));
+
+      picture.src = srcPhoto.url;
+      likesCount.textContent = srcPhoto.likes;
+      commentCount.textContent = srcPhoto.comments.length;
+      caption.textContent = srcPhoto.description;
+      console.log(srcPhoto);
 
 
       bigPicture.classList.remove('hidden');
