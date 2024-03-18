@@ -20,8 +20,9 @@ function openBigPictureHandler() {
   });
 }
 
-function renderPhoto({url, description, likes, comments}) {
+function renderPhoto({id, url, description, likes, comments}) {
   const photo = pictureTemplate.cloneNode(true);
+  photo.dataset.id = id;
   photo.querySelector('.picture__img').src = url;
   photo.querySelector('.picture__img').alt = description;
   photo.querySelector('.picture__likes').textContent = likes;
