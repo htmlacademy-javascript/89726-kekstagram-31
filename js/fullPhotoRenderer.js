@@ -1,32 +1,90 @@
-/* eslint-disable no-multiple-empty-lines */
+import { photosDataset } from './data.js';
+import { isEscKey } from './util.js';
+
+const picturesContainer = document.querySelector('.pictures');
+const bigPicture = document.querySelector('.big-picture');
+const commentsContainer = bigPicture.querySelector('.social__comments');
+const commentContainer = bigPicture.querySelector('.social__comment');
+const bigPictureCancelBtn = bigPicture.querySelector('.big-picture__cancel');
+const body = document.querySelector('body');
 
 
+function onDocumentKeydown(evt) {
+  if (isEscKey(evt)) {
+    evt.preventDefault();
+    closeBigPicture();
+  }
+}
 
+function closeBigPicture() {
+  bigPicture.classList.add('hidden');
+  body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onDocumentKeydown);
+}
 
-// + Окно должно открываться при клике на миниатюру.
-// Данные для окна (изображение, комментарии, лайки и так далее) берите из того же объекта, который использовался для отрисовки соответствующей
-// миниатюры.
-// +Для отображения окна нужно удалять класс hidden у элемента .big-picture
-// и каждый раз заполнять его данными о конкретной фотографии:
-//     + Адрес изображения url подставьте как src изображения внутри блока .big-picture__img.
-//     + Количество лайков likes подставьте как текстовое содержание элемента .likes-count.
-//     + Общее количество комментариев к фотографии comments подставьте как текстовое содержание элемента .social__comment-total-count.
-//     + Описание фотографии description вставьте строкой в блок .social__caption.
+function prepareBigPictureContent(srcPhoto) {
+  const picture = document.querySelector('.big-picture__img img');
+  const likesCount = bigPicture.querySelector('.likes-count');
+  const commentTotalCount = bigPicture.querySelector('.social__comment-total-count');
+  const commentShownCount = bigPicture.querySelector('.social__comment-shown-count');
+  const caption = bigPicture.querySelector('.social__caption');
 
-//     !!!Количество показанных комментариев подставьте как текстовое содержание элемента .social__comment-shown-count.
+  picture.src = srcPhoto.url;
+  likesCount.textContent = srcPhoto.likes;
+  commentTotalCount.textContent = srcPhoto.comments.length;
+  commentShownCount.textContent = srcPhoto.comments.length;
+  caption.textContent = srcPhoto.description;
+}
 
-//     + Список комментариев под фотографией: комментарии должны вставляться в блок .social__comments. Разметка каждого комментария должна выглядеть так:
-//     <li class="social__comment">
-//       <img
-//         class="social__picture"
-//         src="{{аватар}}"
-//         alt="{{имя комментатора}}"
-//         width="35" height="35">
-//       <p class="social__text">{{текст комментария}}</p>
-//     </li>
+function hideCommentBlock() {
+  const commentCount = bigPicture.querySelector('.social__comment-count');
+  const commentLoader = bigPicture.querySelector('.comments-loader');
+  commentCount.classList.add('hidden');
+  commentLoader.classList.add('hidden');
+}
 
-// + После открытия окна спрячьте блоки счётчика комментариев .social__comment-count и загрузки новых комментариев .comments-loader, добавив им класс hidden, с ними мы разберёмся позже, в другом домашнем задании.
+function openModal() {
+  bigPicture.classList.remove('hidden');
+  body.classList.add('modal-open');
 
-// + После открытия окна добавьте тегу <body> класс modal-open, чтобы контейнер с фотографиями позади не прокручивался при скролле. При закрытии окна не забудьте удалить этот класс.
+  document.addEventListener('keydown', onDocumentKeydown);
+  bigPictureCancelBtn.addEventListener('click', () => {
+    closeBigPicture();
+  });
+}
 
-// + Напишите код для закрытия окна по нажатию клавиши Esc и клике по иконке закрытия.
+function openBigPictureHandler() {
+  picturesContainer.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    if (evt.target.classList.contains('picture__img')) {
+      const srcImgId = evt.target.closest('.picture').dataset.id;
+      const srcPhoto = photosDataset.find((element) => Number(element.id) === Number(srcImgId));
+      prepareBigPictureContent(srcPhoto);
+
+      renderCommments(srcPhoto.comments);
+      hideCommentBlock();
+      openModal();
+    }
+  });
+}
+
+function renderComment({id, avatar, message, name}) {
+  const comment = commentContainer.cloneNode(true);
+  comment.dataset.id = id;
+  comment.querySelector('img').src = avatar;
+  comment.querySelector('img').alt = name;
+  comment.querySelector('p').textContent = message;
+  return comment;
+}
+
+function renderCommments(data) {
+  commentsContainer.textContent = '';
+  const fragment = new DocumentFragment();
+  data.map((comment) => {
+    const commentElement = renderComment(comment);
+    fragment.appendChild(commentElement);
+  });
+  commentsContainer.appendChild(fragment);
+}
+
+export {openBigPictureHandler};
