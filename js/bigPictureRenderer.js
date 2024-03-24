@@ -22,6 +22,16 @@ function closeBigPicture() {
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
+function openBigPicture() {
+  bigPicture.classList.remove('hidden');
+  body.classList.add('modal-open');
+
+  document.addEventListener('keydown', onDocumentKeydown);
+  bigPictureCancelBtn.addEventListener('click', () => {
+    closeBigPicture();
+  });
+}
+
 function prepareBigPictureContent(srcPhoto) {
   const picture = document.querySelector('.big-picture__img img');
   const likesCount = bigPicture.querySelector('.likes-count');
@@ -42,17 +52,6 @@ function hideCommentBlock() {
   commentCount.classList.add('hidden');
   commentLoader.classList.add('hidden');
 }
-
-function openModal() {
-  bigPicture.classList.remove('hidden');
-  body.classList.add('modal-open');
-
-  document.addEventListener('keydown', onDocumentKeydown);
-  bigPictureCancelBtn.addEventListener('click', () => {
-    closeBigPicture();
-  });
-}
-
 function renderComment({id, avatar, message, name}) {
   const comment = commentContainer.cloneNode(true);
   comment.dataset.id = id;
@@ -81,6 +80,6 @@ picturesContainer.addEventListener('click', (evt) => {
 
     renderCommments(srcPhoto.comments);
     hideCommentBlock();
-    openModal();
+    openBigPicture();
   }
 });
