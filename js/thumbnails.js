@@ -1,5 +1,3 @@
-import { openBigPictureHandler } from './fullPhotoRenderer.js';
-
 const pictureTemplate = document.querySelector('#picture').content.firstElementChild;
 const picturesContainer = document.querySelector('.pictures');
 
@@ -18,7 +16,6 @@ function renderPhotos(photos) {
     const photoElement = renderPhoto(photo);
     fragment.appendChild(photoElement);
   });
-  openBigPictureHandler();
   picturesContainer.appendChild(fragment);
 }
 

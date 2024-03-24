@@ -53,21 +53,6 @@ function openModal() {
   });
 }
 
-function openBigPictureHandler() {
-  picturesContainer.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    if (evt.target.classList.contains('picture__img')) {
-      const srcImgId = evt.target.closest('.picture').dataset.id;
-      const srcPhoto = photosDataset.find((element) => Number(element.id) === Number(srcImgId));
-      prepareBigPictureContent(srcPhoto);
-
-      renderCommments(srcPhoto.comments);
-      hideCommentBlock();
-      openModal();
-    }
-  });
-}
-
 function renderComment({id, avatar, message, name}) {
   const comment = commentContainer.cloneNode(true);
   comment.dataset.id = id;
@@ -87,4 +72,15 @@ function renderCommments(data) {
   commentsContainer.appendChild(fragment);
 }
 
-export {openBigPictureHandler};
+picturesContainer.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  if (evt.target.classList.contains('picture__img')) {
+    const srcImgId = evt.target.closest('.picture').dataset.id;
+    const srcPhoto = photosDataset.find((element) => Number(element.id) === Number(srcImgId));
+    prepareBigPictureContent(srcPhoto);
+
+    renderCommments(srcPhoto.comments);
+    hideCommentBlock();
+    openModal();
+  }
+});
