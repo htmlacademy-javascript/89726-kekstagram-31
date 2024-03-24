@@ -1,10 +1,25 @@
 import { photosDataset } from './data.js';
+import { isEscKey } from './util.js';
 const pictureTemplate = document.querySelector('#picture').content.firstElementChild;
 const picturesContainer = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
 const commentsContainer = bigPicture.querySelector('.social__comments');
 const commentContainer = bigPicture.querySelector('.social__comment');
-// const commentsFragment = new DocumentFragment();
+const bigPictureCancelBtn = bigPicture.querySelector('.big-picture__cancel');
+
+
+function onDocumentKeydown(evt) {
+  if (isEscKey(evt)) {
+    evt.preventDefault();
+    closeBigPicture();
+  }
+}
+
+function closeBigPicture() {
+  bigPicture.classList.add('hidden');
+  document.querySelector('body').classList.remove('modal-open');
+  document.removeEventListener('keydown', onDocumentKeydown);
+}
 
 function openBigPictureHandler() {
   picturesContainer.addEventListener('click', (evt) => {
@@ -12,8 +27,10 @@ function openBigPictureHandler() {
     if (evt.target.classList.contains('picture__img')) {
       const picture = document.querySelector('.big-picture__img img');
       const likesCount = bigPicture.querySelector('.likes-count');
-      const commentCount = bigPicture.querySelector('.social__comment-total-count');
+      const commentTotalCount = bigPicture.querySelector('.social__comment-total-count');
       const commentShownCount = bigPicture.querySelector('.social__comment-shown-count');
+      const commentCount = bigPicture.querySelector('.social__comment-count');
+      const commentLoader = bigPicture.querySelector('.comments-loader');
       const caption = bigPicture.querySelector('.social__caption');
 
       const srcImgId = evt.target.closest('.picture').dataset.id;
@@ -21,13 +38,21 @@ function openBigPictureHandler() {
 
       picture.src = srcPhoto.url;
       likesCount.textContent = srcPhoto.likes;
-      commentCount.textContent = srcPhoto.comments.length;
-      commentShownCount.textContent = srcPhoto.comments.length; //ToDo
+      commentTotalCount.textContent = srcPhoto.comments.length;
+      commentShownCount.textContent = srcPhoto.comments.length;
       caption.textContent = srcPhoto.description;
 
       renderCommments(srcPhoto.comments);
+      commentCount.classList.add('hidden');
+      commentLoader.classList.add('hidden');
 
       bigPicture.classList.remove('hidden');
+      document.querySelector('body').classList.add('modal-open');
+
+      document.addEventListener('keydown', onDocumentKeydown);
+      bigPictureCancelBtn.addEventListener('click', () => {
+        closeBigPicture();
+      });
     }
   });
 }
