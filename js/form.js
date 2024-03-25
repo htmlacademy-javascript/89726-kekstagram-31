@@ -24,7 +24,6 @@ function closeUploadModal() {
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
-uploadImgInput.addEventListener('click', (evt) => {
-  evt.preventDefault();
+uploadImgInput.addEventListener('change', () => {
   openUploadModal();
 });
