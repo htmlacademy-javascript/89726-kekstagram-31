@@ -76,6 +76,6 @@ const generateNewPhoto = () => {
   };
 };
 
-const generatePhotoList = () => Array.from({length: PHOTO_COUNT}, generateNewPhoto());
+const photosDataset = Array.from({length: PHOTO_COUNT}, generateNewPhoto());
 
-export {generatePhotoList};
+export {photosDataset};
