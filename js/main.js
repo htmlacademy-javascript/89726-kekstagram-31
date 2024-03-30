@@ -1,6 +1,6 @@
 import { photosDataset } from './data.js';
 import { renderPhotos } from './thumbnails.js';
-import './bigPictureRenderer.js';
-import './uploadImageForm.js';
+import './big-picture-renderer.js';
+import './upload-image-form-renderer.js';
 
 renderPhotos(photosDataset);
