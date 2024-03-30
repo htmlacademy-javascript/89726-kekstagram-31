@@ -2,6 +2,7 @@ import { isEscKey } from './util.js';
 
 const uploadImgInput = document.querySelector('.img-upload__input');
 const uploadImgForm = document.querySelector('.img-upload__overlay');
+const uploadFormCancelBtn = uploadImgForm.querySelector('.img-upload__cancel');
 const body = document.querySelector('body');
 
 
@@ -16,6 +17,9 @@ function openUploadModal() {
   uploadImgForm.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
+  uploadFormCancelBtn.addEventListener('click', () => {
+    closeUploadModal();
+  });
 }
 
 function closeUploadModal() {
