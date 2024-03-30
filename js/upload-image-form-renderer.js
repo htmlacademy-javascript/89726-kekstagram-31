@@ -5,12 +5,15 @@ const uploadImgInput = document.querySelector('.img-upload__input');
 const uploadImgForm = document.querySelector('.img-upload__overlay');
 const uploadFormCancelBtn = uploadImgForm.querySelector('.img-upload__cancel');
 const hashTagsInput = uploadImgForm.querySelector('.text__hashtags');
-const descriptionInput = uploadImgForm.querySelector('.text__description');
+const commentInput = uploadImgForm.querySelector('.text__description');
 const body = document.querySelector('body');
 
 
 function onDocumentKeydown(evt) {
   if (isEscKey(evt)) {
+    if (document.activeElement === hashTagsInput || document.activeElement === commentInput) {
+      return;
+    }
     evt.preventDefault();
     closeUploadModal();
   }
@@ -39,5 +42,5 @@ uploadImgInput.addEventListener('change', () => {
 function resetFormFields() {
   uploadImgInput.value = '';
   hashTagsInput.value = '';
-  descriptionInput.value = '';
+  commentInput.value = '';
 }
