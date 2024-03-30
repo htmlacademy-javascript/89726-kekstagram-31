@@ -8,7 +8,6 @@ const hashTagsInput = uploadImgForm.querySelector('.text__hashtags');
 const commentInput = uploadImgForm.querySelector('.text__description');
 const body = document.querySelector('body');
 
-
 function onDocumentKeydown(evt) {
   if (isEscKey(evt)) {
     if (document.activeElement === hashTagsInput || document.activeElement === commentInput) {

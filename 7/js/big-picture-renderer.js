@@ -72,7 +72,7 @@ function renderCommments(data) {
 }
 
 picturesContainer.addEventListener('click', (evt) => {
-  if (evt.target.closest('picture__img')) {
+  if (evt.target.classList.contains('picture__img')) {
     const srcImgId = evt.target.closest('.picture').dataset.id;
     const srcPhoto = photosDataset.find((element) => Number(element.id) === Number(srcImgId));
     prepareBigPictureContent(srcPhoto);
