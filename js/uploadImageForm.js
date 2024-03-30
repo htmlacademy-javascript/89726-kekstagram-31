@@ -3,6 +3,8 @@ import { isEscKey } from './util.js';
 const uploadImgInput = document.querySelector('.img-upload__input');
 const uploadImgForm = document.querySelector('.img-upload__overlay');
 const uploadFormCancelBtn = uploadImgForm.querySelector('.img-upload__cancel');
+const hashTagsInput = uploadImgForm.querySelector('.text__hashtags');
+const descriptionInput = uploadImgForm.querySelector('.text__description');
 const body = document.querySelector('body');
 
 
@@ -23,6 +25,7 @@ function openUploadModal() {
 }
 
 function closeUploadModal() {
+  resetFormFields();
   uploadImgForm.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -31,3 +34,9 @@ function closeUploadModal() {
 uploadImgInput.addEventListener('change', () => {
   openUploadModal();
 });
+
+function resetFormFields() {
+  uploadImgInput.value = '';
+  hashTagsInput.value = '';
+  descriptionInput.value = '';
+}
