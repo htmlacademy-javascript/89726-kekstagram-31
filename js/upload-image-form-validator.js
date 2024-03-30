@@ -1,5 +1,12 @@
 const uploadForm = document.querySelector('.img-upload__form');
 const hashTagsInput = uploadForm.querySelector('.text__hashtags');
+const commentInput = uploadForm.querySelector('.text__description');
+
+const MAX_COMMENT_LENGTH = 140;
+const MIN_COMMENT_LENGTH = 0;
+const MAX_HASHTAGS_COUNT = 5;
+const MAX_HASHTAG_LENGTH = 20;
+const MIN_HASHTAG_LENGTH = 1;
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__form',
@@ -13,15 +20,15 @@ function getHashTagsValidationErrorMessage() {
   return hashTagsValidationErrorMessage;
 }
 
-function validateHashTagsInput() {
+function validateHashTags() {
   if (hashTagsInput.value === '') {
     return true;
   }
 
   const hashTags = hashTagsInput.value.split(' ');
 
-  if (hashTags.length > 5) {
-    hashTagsValidationErrorMessage = 'нельзя указать больше пяти хэштегов';
+  if (hashTags.length > MAX_HASHTAGS_COUNT) {
+    hashTagsValidationErrorMessage = `нельзя указать больше ${MAX_HASHTAGS_COUNT} хэштегов`;
     return false;
   }
 
@@ -33,13 +40,13 @@ function validateHashTagsInput() {
       return false;
     }
 
-    if (hashTag.length === 1) {
-      hashTagsValidationErrorMessage = 'хэштег должен содержать более одного символа';
+    if (hashTag.length === MIN_HASHTAG_LENGTH) {
+      hashTagsValidationErrorMessage = `хэштег должен содержать более ${MIN_HASHTAG_LENGTH} символа`;
       return false;
     }
 
-    if (hashTag.length > 20) {
-      hashTagsValidationErrorMessage = 'хэштег не может быть более 20 символов';
+    if (hashTag.length > MAX_HASHTAG_LENGTH) {
+      hashTagsValidationErrorMessage = `хэштег не может быть более ${MAX_HASHTAG_LENGTH} символов`;
       return false;
     }
 
@@ -60,10 +67,21 @@ function validateHashTagsInput() {
   return true;
 }
 
+
+function validateComment() {
+  return commentInput.value.length >= MIN_COMMENT_LENGTH && commentInput.value.length <= MAX_COMMENT_LENGTH;
+}
+
 pristine.addValidator(
   hashTagsInput,
-  validateHashTagsInput,
+  validateHashTags,
   getHashTagsValidationErrorMessage
+);
+
+pristine.addValidator(
+  commentInput,
+  validateComment,
+  `длина комментария не может составлять больше ${MAX_COMMENT_LENGTH} символов`
 );
 
 
