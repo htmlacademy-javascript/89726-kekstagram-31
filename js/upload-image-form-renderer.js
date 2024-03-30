@@ -1,4 +1,5 @@
 import { isEscKey } from './util.js';
+import './upload-image-form-validator.js';
 
 const uploadImgInput = document.querySelector('.img-upload__input');
 const uploadImgForm = document.querySelector('.img-upload__overlay');
