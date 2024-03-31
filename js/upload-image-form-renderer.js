@@ -1,4 +1,5 @@
 import { isEscKey } from './util.js';
+import { resetImgScalerSetting } from './upload-image-scaler.js';
 import './upload-image-form-validator.js';
 
 const uploadImgInput = document.querySelector('.img-upload__input');
@@ -29,6 +30,7 @@ function openUploadModal() {
 
 function closeUploadModal() {
   resetFormFields();
+  resetImgScalerSetting();
   uploadImgForm.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
