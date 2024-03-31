@@ -19,7 +19,6 @@ imgUploadForm.dataset.effect = 'none';
 sliderElement.noUiSlider.on('update', (values, handle) => {
   effectLevel.value = values[handle];
 
-  // Проверяем, какой эффект выбран, и применяем соответствующий стиль
   const effect = document.querySelector('.effects__radio:checked').value;
   switch (effect) {
     case 'chrome':
