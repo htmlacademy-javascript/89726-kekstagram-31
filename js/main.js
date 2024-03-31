@@ -3,5 +3,6 @@ import { renderPhotos } from './thumbnails.js';
 import './big-picture-renderer.js';
 import './upload-image-form-renderer.js';
 import './upload-image-scaler.js';
+import './upload-image-effector.js';
 
 renderPhotos(photosDataset);
