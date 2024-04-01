@@ -5,7 +5,7 @@ const picturesContainer = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
 const commentsContainer = bigPicture.querySelector('.social__comments');
 const commentContainer = bigPicture.querySelector('.social__comment');
-const bigPictureCancelBtn = bigPicture.querySelector('.big-picture__cancel');
+const pictureCancelBtn = bigPicture.querySelector('.big-picture__cancel');
 const body = document.querySelector('body');
 
 
@@ -27,7 +27,7 @@ function openBigPicture() {
   body.classList.add('modal-open');
 
   document.addEventListener('keydown', onDocumentKeydown);
-  bigPictureCancelBtn.addEventListener('click', () => {
+  pictureCancelBtn.addEventListener('click', () => {
     closeBigPicture();
   });
 }
