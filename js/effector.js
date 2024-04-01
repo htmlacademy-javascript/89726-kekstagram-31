@@ -45,7 +45,7 @@ sliderElement.noUiSlider.on('update', (values, handle) => {
 effectList.addEventListener('change', (evt) => {
   const effect = evt.target.value;
 
-  (effect === 'none') ?
+  effect === 'none' ?
     sliderElement.style.display = 'none' :
     sliderElement.style.display = 'block';
 
