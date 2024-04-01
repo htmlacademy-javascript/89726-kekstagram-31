@@ -45,11 +45,10 @@ sliderElement.noUiSlider.on('update', (values, handle) => {
 effectList.addEventListener('change', (evt) => {
   const effect = evt.target.value;
 
-  if (effect === 'none') {
-    sliderElement.style.display = 'none';
-  } else {
+  (effect === 'none') ?
+    sliderElement.style.display = 'none' :
     sliderElement.style.display = 'block';
-  }
+
 
   sliderElement.noUiSlider.set(1);
 });
