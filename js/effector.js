@@ -2,7 +2,7 @@ const imagePreview = document.querySelector('.img-upload__preview');
 const effectLevel = document.querySelector('.effect-level__value');
 const effectList = document.querySelector('.effects__list');
 const sliderElement = document.querySelector('.img-upload__effect-level');
-const imgUploadForm = document.querySelector('.img-upload__form');
+const form = document.querySelector('.img-upload__form');
 
 noUiSlider.create(sliderElement, {
   start: 1,
@@ -14,7 +14,7 @@ noUiSlider.create(sliderElement, {
 });
 
 sliderElement.style.display = 'none';
-imgUploadForm.dataset.effect = 'none';
+form.dataset.effect = 'none';
 
 sliderElement.noUiSlider.on('update', (values, handle) => {
   effectLevel.value = values[handle];
@@ -56,5 +56,5 @@ effectList.addEventListener('change', (evt) => {
 
 function updateEffect(value) {
   imagePreview.style.filter = value;
-  imgUploadForm.dataset.effect = value;
+  form.dataset.effect = value;
 }

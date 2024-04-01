@@ -1,8 +1,8 @@
 import { photosDataset } from './data.js';
 import { renderPhotos } from './thumbnails.js';
 import './big-picture-renderer.js';
-import './upload-image-form-renderer.js';
-import './upload-image-scaler.js';
-import './upload-image-effector.js';
+import './form-renderer.js';
+import './scaler.js';
+import './image-effector.js';
 
 renderPhotos(photosDataset);
