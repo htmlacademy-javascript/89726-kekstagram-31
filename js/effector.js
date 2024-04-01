@@ -58,3 +58,11 @@ function updateEffect(value) {
   imagePreview.style.filter = value;
   form.dataset.effect = value;
 }
+
+function resetEffects() {
+  sliderElement.style.display = 'none';
+  imagePreview.style.filter = 'none';
+  form.dataset.effect = 'none';
+}
+
+export {resetEffects};
