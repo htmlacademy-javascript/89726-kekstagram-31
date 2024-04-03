@@ -46,10 +46,10 @@ effectList.addEventListener('change', (evt) => {
   const effect = evt.target.value;
 
   if (effect === 'none') {
-      sliderElement.style.display = 'none';
-    } else {
-      sliderElement.style.display = 'block';
-    }
+    sliderElement.style.display = 'none';
+  } else {
+    sliderElement.style.display = 'block';
+  }
 
   sliderElement.noUiSlider.set(1);
 });
