@@ -70,17 +70,18 @@ function renderCommments(data) {
   commentsContainer.appendChild(fragment);
 }
 
-const handleBigPictureOpen = (data) =>{ picturesContainer.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('picture__img')) {
-    const srcImgId = evt.target.closest('.picture').dataset.id;
-    const srcPhoto = data.find((element) => Number(element.id) === Number(srcImgId));
-    prepareBigPictureContent(srcPhoto);
+const handleBigPictureOpen = (data) =>{
+  picturesContainer.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('picture__img')) {
+      const srcImgId = evt.target.closest('.picture').dataset.id;
+      const srcPhoto = data.find((element) => Number(element.id) === Number(srcImgId));
+      prepareBigPictureContent(srcPhoto);
 
-    renderCommments(srcPhoto.comments);
-    hideCommentBlock();
-    openBigPicture();
-  }
-});
+      renderCommments(srcPhoto.comments);
+      hideCommentBlock();
+      openBigPicture();
+    }
+  });
 };
 
 export {handleBigPictureOpen};
