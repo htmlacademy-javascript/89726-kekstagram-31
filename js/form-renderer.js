@@ -53,10 +53,10 @@ function resetFormFields() {
 function closeSuccessModal() {
   const success = document.querySelector('.success');
   body.removeChild(success);
-  document.removeEventListener('keydown', onSuccessKeydown);
+  document.removeEventListener('keydown', onSuccessModalKeydown);
 }
 
-function onSuccessKeydown(evt) {
+function onSuccessModalKeydown(evt) {
   if (isEscKey(evt)) {
     evt.preventDefault();
     closeSuccessModal();
@@ -71,7 +71,31 @@ function showSuccessMessageAndCloseModal() {
 
   body.appendChild(successModal);
   successBtn.addEventListener('click', closeSuccessModal);
-  document.addEventListener('keydown', onSuccessKeydown);
+  document.addEventListener('keydown', onSuccessModalKeydown);
 }
 
-setUserFormSubmit(showSuccessMessageAndCloseModal);
+function closeErrorModal() {
+  const error = document.querySelector('.error');
+  body.removeChild(error);
+  document.addEventListener('keydown', onDocumentKeydown);
+}
+
+function onErrorModalKeydown(evt) {
+  if (isEscKey(evt)) {
+    evt.preventDefault();
+    closeErrorModal();
+  }
+}
+
+function showError() {
+  const errorTemplate = document.querySelector('#error').content.firstElementChild;
+  const errorContainer = errorTemplate.cloneNode(true);
+  const errorBtn = errorContainer.querySelector('.error__button');
+
+  document.body.append(errorContainer);
+  errorBtn.addEventListener('click', closeErrorModal);
+  document.removeEventListener('keydown', onDocumentKeydown);
+  document.addEventListener('keydown', onErrorModalKeydown);
+}
+
+setUserFormSubmit(showSuccessMessageAndCloseModal, showError);

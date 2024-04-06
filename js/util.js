@@ -6,6 +6,7 @@ function isEscKey(evt) {
   return evt.key === 'Escape' || evt.keyCode === 27;
 }
 
+
 const showAlert = (message) => {
   const errorTemplate = document.querySelector('#data-error').content.firstElementChild;
   const alertContainer = errorTemplate.cloneNode(true);

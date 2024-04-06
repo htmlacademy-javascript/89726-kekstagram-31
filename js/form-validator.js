@@ -1,5 +1,4 @@
 import { sendData } from './api';
-import { showAlert } from './util';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const hashTagsInput = uploadForm.querySelector('.text__hashtags');
@@ -124,7 +123,7 @@ const unblockSubmitButton = () => {
   submitBtn.textContent = SubmitButtonText.IDLE;
 };
 
-const setUserFormSubmit = (onSuccess) => {
+const setUserFormSubmit = (onSuccess, onError) => {
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
@@ -133,11 +132,7 @@ const setUserFormSubmit = (onSuccess) => {
       blockSubmitButton();
       sendData(new FormData(evt.target))
         .then(onSuccess)
-        .catch(
-          (err) => {
-            showAlert(err.message);
-          }
-        )
+        .catch(onError)
         .finally(unblockSubmitButton);
     }
   });
