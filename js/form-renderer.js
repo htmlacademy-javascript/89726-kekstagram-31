@@ -3,6 +3,7 @@ import { resetEffects } from './effector.js';
 import { resetImgScalerSetting } from './scaler.js';
 import { setUserFormSubmit } from './form-validator.js';
 
+const successTemplate = document.querySelector('#success').content.firstElementChild;
 const input = document.querySelector('.img-upload__input');
 const form = document.querySelector('.img-upload__overlay');
 const formCancelBtn = form.querySelector('.img-upload__cancel');
@@ -49,4 +50,28 @@ function resetFormFields() {
   commentInput.value = '';
 }
 
-setUserFormSubmit(closeUploadModal);
+function closeSuccessModal() {
+  const success = document.querySelector('.success');
+  body.removeChild(success);
+  document.removeEventListener('keydown', onSuccessKeydown);
+}
+
+function onSuccessKeydown(evt) {
+  if (isEscKey(evt)) {
+    evt.preventDefault();
+    closeSuccessModal();
+  }
+}
+
+function showSuccessMessageAndCloseModal() {
+  closeUploadModal();
+
+  const successModal = successTemplate.cloneNode(true);
+  const successBtn = successModal.querySelector('.success__button');
+
+  body.appendChild(successModal);
+  successBtn.addEventListener('click', closeSuccessModal);
+  document.addEventListener('keydown', onSuccessKeydown);
+}
+
+setUserFormSubmit(showSuccessMessageAndCloseModal);
