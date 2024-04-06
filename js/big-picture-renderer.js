@@ -1,5 +1,7 @@
 import { isEscKey } from './util.js';
 
+const COMMENT_LOAD_STEP = 5;
+
 const picturesContainer = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
 const commentsContainer = bigPicture.querySelector('.social__comments');
@@ -9,7 +11,6 @@ const body = document.querySelector('body');
 const commentLoader = bigPicture.querySelector('.comments-loader');
 const commentFragment = document.createDocumentFragment();
 
-const COMMENT_LOAD_STEP = 5;
 let displayedcommentCount = 0;
 
 
@@ -123,7 +124,7 @@ function renderCommments(data) {
   commentsContainer.appendChild(fragment);
 }
 
-const handleBigPictureOpen = (data) =>{
+const handlePictureClick = (data) =>{
   picturesContainer.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('picture__img')) {
       const srcImgId = evt.target.closest('.picture').dataset.id;
@@ -137,4 +138,4 @@ const handleBigPictureOpen = (data) =>{
   });
 };
 
-export {handleBigPictureOpen};
+export {handlePictureClick};
