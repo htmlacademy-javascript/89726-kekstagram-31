@@ -1,7 +1,7 @@
 import { isEscKey } from './util.js';
 import { resetEffects } from './effector.js';
 import { resetImgScalerSetting } from './scaler.js';
-import './form-validator.js';
+import { setUserFormSubmit } from './form-validator.js';
 
 const input = document.querySelector('.img-upload__input');
 const form = document.querySelector('.img-upload__overlay');
@@ -48,3 +48,5 @@ function resetFormFields() {
   hashTagsInput.value = '';
   commentInput.value = '';
 }
+
+setUserFormSubmit(closeUploadModal);

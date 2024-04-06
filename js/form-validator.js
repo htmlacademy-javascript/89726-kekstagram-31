@@ -1,6 +1,10 @@
+import { sendData } from './api';
+import { showAlert } from './util';
+
 const uploadForm = document.querySelector('.img-upload__form');
 const hashTagsInput = uploadForm.querySelector('.text__hashtags');
 const commentInput = uploadForm.querySelector('.text__description');
+const submitBtn = uploadForm.querySelector('.img-upload__submit');
 
 const MAX_COMMENT_LENGTH = 140;
 const MIN_COMMENT_LENGTH = 0;
@@ -8,11 +12,16 @@ const MAX_HASHTAGS_COUNT = 5;
 const MAX_HASHTAG_LENGTH = 20;
 const MIN_HASHTAG_LENGTH = 1;
 
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
+
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__form',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper--error'
-});
+}, false);
 
 let hashTagsErrorMessage = '';
 
@@ -94,7 +103,7 @@ function validateComment() {
 }
 
 pristine.addValidator(
-  hashTagsInput,
+  commentInput,
   validateHashTags,
   getHashTagsValidationErrorMessage
 );
@@ -105,8 +114,33 @@ pristine.addValidator(
   `длина комментария не может составлять больше ${MAX_COMMENT_LENGTH} символов`
 );
 
+const blockSubmitButton = () => {
+  submitBtn.disabled = true;
+  submitBtn.textContent = SubmitButtonText.SENDING;
+};
 
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+const unblockSubmitButton = () => {
+  submitBtn.disabled = false;
+  submitBtn.textContent = SubmitButtonText.IDLE;
+};
+
+const setUserFormSubmit = (onSuccess) => {
+  uploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .catch(
+          (err) => {
+            showAlert(err.message);
+          }
+        )
+        .finally(unblockSubmitButton);
+    }
+  });
+};
+
+export { setUserFormSubmit };
