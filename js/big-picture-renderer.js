@@ -1,4 +1,3 @@
-import { photosDataset } from './data.js';
 import { isEscKey } from './util.js';
 
 const picturesContainer = document.querySelector('.pictures');
@@ -71,10 +70,10 @@ function renderCommments(data) {
   commentsContainer.appendChild(fragment);
 }
 
-picturesContainer.addEventListener('click', (evt) => {
+const handleBigPictureOpen = (data) =>{ picturesContainer.addEventListener('click', (evt) => {
   if (evt.target.classList.contains('picture__img')) {
     const srcImgId = evt.target.closest('.picture').dataset.id;
-    const srcPhoto = photosDataset.find((element) => Number(element.id) === Number(srcImgId));
+    const srcPhoto = data.find((element) => Number(element.id) === Number(srcImgId));
     prepareBigPictureContent(srcPhoto);
 
     renderCommments(srcPhoto.comments);
@@ -82,3 +81,6 @@ picturesContainer.addEventListener('click', (evt) => {
     openBigPicture();
   }
 });
+};
+
+export {handleBigPictureOpen};
