@@ -1,4 +1,7 @@
 import { shuffleArray } from './util.js';
+
+const RANDOM_FILTER_COULT = 10;
+
 const filters = document.querySelector('.img-filters');
 const defaultFilter = filters.querySelector('#filter-default');
 const randomFilter = filters.querySelector('#filter-random');
@@ -30,7 +33,7 @@ function replacePhotos(photoList) {
 
 function handleRandomFilter() {
   const photosCopy = photos.slice();
-  const randomPhotos = shuffleArray(photosCopy).slice(0, 10);
+  const randomPhotos = shuffleArray(photosCopy).slice(0, RANDOM_FILTER_COULT);
 
   photos.forEach((photoElement) => {
     if(!randomPhotos.includes(photoElement)) {
