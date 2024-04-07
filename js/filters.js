@@ -7,18 +7,40 @@ const picturesContainer = document.querySelector('.pictures');
 
 let photos = [];
 
+window.addEventListener('load', showFilters);
+
 function showFilters() {
   filters.classList.remove('img-filters--inactive');
 }
 
-window.addEventListener('load', showFilters);
+function handleDefaultFilter() {
+  resetHiddenPhotos();
+  replacePhotos(photos);
+}
+
+function replacePhotos(photoList) {
+  photoList.forEach((photoElement) => {
+    picturesContainer.removeChild(photoElement);
+  });
+
+  photoList.forEach((photoElement) => {
+    picturesContainer.appendChild(photoElement);
+  });
+}
 
 function handleRandomFilter() {
-  const randomPhotos = shuffleArray(photos).slice(0, 10);
-  renderPhotos(randomPhotos);
+  const photosCopy = photos.slice();
+  const randomPhotos = shuffleArray(photosCopy).slice(0, 10);
+
+  photos.forEach((photoElement) => {
+    if(!randomPhotos.includes(photoElement)) {
+      photoElement.classList.add('hidden');
+    }
+  });
 }
 
 function handleDiscussedFilter() {
+  resetHiddenPhotos();
   const photoElements = Array.from(picturesContainer.querySelectorAll('.picture'));
 
   photoElements.sort((a, b) => {
@@ -27,46 +49,21 @@ function handleDiscussedFilter() {
     return commentsB - commentsA;
   });
 
-  photoElements.forEach((photoElement) => {
-    picturesContainer.removeChild(photoElement);
-  });
-
-  photoElements.forEach((photoElement) => {
-    picturesContainer.appendChild(photoElement);
-  });
+  replacePhotos(photoElements);
 }
 
-
-function handleDefaultFilter() {
+function resetHiddenPhotos() {
   photos.forEach((photoElement) => {
-    picturesContainer.removeChild(photoElement);
-  });
-
-  photos.forEach((photoElement) => {
-    picturesContainer.appendChild(photoElement);
-  });
-}
-
-function renderPhotos(photosToShow) {
-  const allPhotosElements = document.querySelectorAll('.picture');
-
-  allPhotosElements.forEach((photoElement) => {
-    const photoId = photoElement.dataset.id;
-
-    if (photosToShow.find((photo) => photo.id === Number(photoId))) {
-      photoElement.classList.remove('hidden');
-    } else {
-      photoElement.classList.add('hidden');
-    }
+    photoElement.classList.remove('hidden');
   });
 }
 
 function handlePhotoFilters() {
   photos = Array.from(picturesContainer.querySelectorAll('.picture'));
 
+  defaultFilter.addEventListener('click', handleDefaultFilter);
   randomFilter.addEventListener('click', handleRandomFilter);
   discussedFilter.addEventListener('click', handleDiscussedFilter);
-  defaultFilter.addEventListener('click', handleDefaultFilter);
 }
 
 export { handlePhotoFilters };
