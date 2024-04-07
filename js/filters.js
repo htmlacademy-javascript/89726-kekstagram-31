@@ -18,12 +18,25 @@ function handleRandomFilter() {
 }
 
 function handleDiscussedFilter() {
-  // debugger;
-  const allPhotosElements = document.querySelectorAll('.picture');
+  const container = document.querySelector('.pictures');
+  const photoElements = Array.from(container.querySelectorAll('.picture'));
 
-  const discussedPhotos = photos.sort((a, b) => b.comments.length - a.comments.length);
-  renderPhotos(discussedPhotos);
+  photoElements.sort((a, b) => {
+    const commentsA = a.querySelector('.picture__comments').textContent;
+    const commentsB = b.querySelector('.picture__comments').textContent;
+    return commentsB - commentsA;
+  });
+
+  photoElements.forEach((photoElement) => {
+    container.removeChild(photoElement);
+  });
+
+  photoElements.forEach((photoElement) => {
+    container.appendChild(photoElement);
+  });
 }
+
+
 function handleDefaultFilter() {
   renderPhotos(photos);
 }
