@@ -12,18 +12,20 @@ function showFilters() {
 
 window.addEventListener('load', showFilters);
 
-function hidePhoto(photo) {
-  photo.classList.add('hidden');
-}
-
-function showPhoto(photo) {
-  photo.classList.remove('hidden');
-}
-
-
 function handleRandomFilter() {
   const randomPhotos = shuffleArray(photos).slice(0, 10);
   renderPhotos(randomPhotos);
+}
+
+function handleDiscussedFilter() {
+  // debugger;
+  const allPhotosElements = document.querySelectorAll('.picture');
+
+  const discussedPhotos = photos.sort((a, b) => b.comments.length - a.comments.length);
+  renderPhotos(discussedPhotos);
+}
+function handleDefaultFilter() {
+  renderPhotos(photos);
 }
 
 function renderPhotos(photosToShow) {
@@ -43,6 +45,8 @@ function renderPhotos(photosToShow) {
 function handlePhotoFilters(photoList) {
   photos = photoList;
   randomFilter.addEventListener('click', handleRandomFilter);
+  discussedFilter.addEventListener('click', handleDiscussedFilter);
+  defaultFilter.addEventListener('click', handleDefaultFilter);
 }
 
 export { handlePhotoFilters };
