@@ -12,7 +12,7 @@ getData()
   .then((photos) => {
     renderPhotos(photos);
     handlePictureClick(photos);
-    handlePhotoFilters(photos);
+    handlePhotoFilters();
   })
   .catch((err) => {
     showAlert(err.message);

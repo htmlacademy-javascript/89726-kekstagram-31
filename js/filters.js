@@ -3,6 +3,7 @@ const filters = document.querySelector('.img-filters');
 const defaultFilter = filters.querySelector('#filter-default');
 const randomFilter = filters.querySelector('#filter-random');
 const discussedFilter = filters.querySelector('#filter-discussed');
+const picturesContainer = document.querySelector('.pictures');
 
 let photos = [];
 
@@ -18,8 +19,7 @@ function handleRandomFilter() {
 }
 
 function handleDiscussedFilter() {
-  const container = document.querySelector('.pictures');
-  const photoElements = Array.from(container.querySelectorAll('.picture'));
+  const photoElements = Array.from(picturesContainer.querySelectorAll('.picture'));
 
   photoElements.sort((a, b) => {
     const commentsA = a.querySelector('.picture__comments').textContent;
@@ -28,17 +28,23 @@ function handleDiscussedFilter() {
   });
 
   photoElements.forEach((photoElement) => {
-    container.removeChild(photoElement);
+    picturesContainer.removeChild(photoElement);
   });
 
   photoElements.forEach((photoElement) => {
-    container.appendChild(photoElement);
+    picturesContainer.appendChild(photoElement);
   });
 }
 
 
 function handleDefaultFilter() {
-  renderPhotos(photos);
+  photos.forEach((photoElement) => {
+    picturesContainer.removeChild(photoElement);
+  });
+
+  photos.forEach((photoElement) => {
+    picturesContainer.appendChild(photoElement);
+  });
 }
 
 function renderPhotos(photosToShow) {
@@ -55,8 +61,9 @@ function renderPhotos(photosToShow) {
   });
 }
 
-function handlePhotoFilters(photoList) {
-  photos = photoList;
+function handlePhotoFilters() {
+  photos = Array.from(picturesContainer.querySelectorAll('.picture'));
+
   randomFilter.addEventListener('click', handleRandomFilter);
   discussedFilter.addEventListener('click', handleDiscussedFilter);
   defaultFilter.addEventListener('click', handleDefaultFilter);
