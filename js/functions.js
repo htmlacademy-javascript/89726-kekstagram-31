@@ -1,32 +1,19 @@
-const checkStringMaxLength = (string,maxLength) => string.length <= maxLength;
-checkStringMaxLength('проверяемая строка', 20);
-
-const checkStringIsPalindrome = (string) => {
-  const trimmedString = string.replaceAll(' ', '').toLowerCase();
-  let reverseString = '';
-
-  for (let i = trimmedString.length - 1; i >= 0; i--) {
-    reverseString += trimmedString[i];
+function isMeetingInWorkingHours(startWork, endWork, startMeeting, duration) {
+  function timeToMinutes(time) {
+    const [hours, minutes] = time.split(':').map(Number);
+    return hours * 60 + minutes;
   }
 
-  return reverseString === trimmedString;
-};
-checkStringIsPalindrome('Лёша на полке клопа нашёл ');
+  const startWorkInMinutes = timeToMinutes(startWork);
+  const endWorkInMinutes = timeToMinutes(endWork);
+  const startMeetingInMinutes = timeToMinutes(startMeeting);
+  const endMeetingInMinutes = startMeetingInMinutes + duration;
 
-const getDigitsFromText = (string) => {
-  let stringWithDigits = '';
+  return startMeetingInMinutes >= startWorkInMinutes && endMeetingInMinutes <= endWorkInMinutes;
+}
 
-  for (let i = 0; i < string.length; i++) {
-    if (string[i] >= '0' && string[i] <= '9') {
-      stringWithDigits += string[i];
-    }
-  }
-  const parsedString = parseInt(stringWithDigits, 10);
-  return Number.isNaN(parsedString) ? NaN : parsedString;
-};
-
-getDigitsFromText('2023 год');
-getDigitsFromText('ECMAScript 2022');
-getDigitsFromText('1 кефир, 0.5 батона');
-getDigitsFromText('агент 007');
-getDigitsFromText('а я томат');
+isMeetingInWorkingHours('08:00', '17:30', '14:00', 90);
+isMeetingInWorkingHours('8:0', '10:0', '8:0', 120);
+isMeetingInWorkingHours('08:00', '14:30', '14:00', 90);
+isMeetingInWorkingHours('14:00', '17:30', '08:0', 90);
+isMeetingInWorkingHours('8:00', '17:30', '08:00', 900);
