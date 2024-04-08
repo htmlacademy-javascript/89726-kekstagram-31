@@ -6,7 +6,7 @@ const DEFAULT_SCALE = 100;
 const controlSmaller = document.querySelector('.scale__control--smaller');
 const controlBigger = document.querySelector('.scale__control--bigger');
 const scaleValue = document.querySelector('.scale__control--value');
-const imgPreview = document.querySelector('.img-upload__preview');
+const imgPreview = document.querySelector('.img-upload__preview img');
 const form = document.querySelector('.img-upload__form');
 
 scaleValue.value = `${DEFAULT_SCALE}%`;
