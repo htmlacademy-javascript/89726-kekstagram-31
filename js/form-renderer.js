@@ -10,6 +10,7 @@ const formCancelBtn = form.querySelector('.img-upload__cancel');
 const hashTagsInput = form.querySelector('.text__hashtags');
 const commentInput = form.querySelector('.text__description');
 const body = document.querySelector('body');
+const imgPreview = document.querySelector('.img-upload__preview img');
 
 function onDocumentKeydown(evt) {
   if (document.activeElement === hashTagsInput || document.activeElement === commentInput) {
@@ -41,6 +42,8 @@ function closeUploadModal() {
 }
 
 input.addEventListener('change', () => {
+  const file = input.files[0];
+  imgPreview.src = URL.createObjectURL(file);
   openUploadModal();
 });
 
