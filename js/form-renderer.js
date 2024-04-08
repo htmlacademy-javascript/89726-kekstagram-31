@@ -12,6 +12,7 @@ const commentInput = form.querySelector('.text__description');
 const body = document.querySelector('body');
 const imgPreview = document.querySelector('.img-upload__preview img');
 const originalEffect = document.querySelector('#effect-none');
+const effectPreviews = document.querySelectorAll('.effects__preview');
 
 function onDocumentKeydown(evt) {
   if (document.activeElement === hashTagsInput || document.activeElement === commentInput) {
@@ -45,6 +46,9 @@ function closeUploadModal() {
 input.addEventListener('change', () => {
   const file = input.files[0];
   imgPreview.src = URL.createObjectURL(file);
+  effectPreviews.forEach((preview) => {
+    preview.style.backgroundImage = `url("${URL.createObjectURL(file)}")` ;
+  });
   openUploadModal();
 });
 
