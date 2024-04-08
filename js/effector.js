@@ -3,8 +3,9 @@ const effectLevel = document.querySelector('.effect-level__value');
 const effectList = document.querySelector('.effects__list');
 const sliderElement = document.querySelector('.img-upload__effect-level');
 const form = document.querySelector('.img-upload__form');
+const sliderNode = sliderElement.querySelector('.effect-level__slider');
 
-noUiSlider.create(sliderElement, {
+noUiSlider.create(sliderNode, {
   start: 1,
   step: 0.1,
   range: {
@@ -16,7 +17,7 @@ noUiSlider.create(sliderElement, {
 sliderElement.style.display = 'none';
 form.dataset.effect = 'none';
 
-sliderElement.noUiSlider.on('update', (values, handle) => {
+sliderNode.noUiSlider.on('update', (values, handle) => {
   effectLevel.value = values[handle];
 
   const effect = document.querySelector('.effects__radio:checked').value;
@@ -51,7 +52,7 @@ effectList.addEventListener('change', (evt) => {
     sliderElement.style.display = 'block';
   }
 
-  sliderElement.noUiSlider.set(1);
+  sliderNode.noUiSlider.set(1);
 });
 
 function updateEffect(value) {
