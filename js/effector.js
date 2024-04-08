@@ -1,4 +1,4 @@
-const imagePreview = document.querySelector('.img-upload__preview');
+const imagePreview = document.querySelector('.img-upload__preview img');
 const effectLevel = document.querySelector('.effect-level__value');
 const effectList = document.querySelector('.effects__list');
 const sliderElement = document.querySelector('.img-upload__effect-level');
@@ -29,7 +29,7 @@ sliderNode.noUiSlider.on('update', (values, handle) => {
       updateEffect(`sepia(${effectLevel.value})`);
       break;
     case 'marvin':
-      updateEffect(`invert(${effectLevel.value * 100}%)`);
+      updateEffect(`invert(${100 - effectLevel.value}%)`);
       break;
     case 'phobos':
       updateEffect(`blur(${effectLevel.value * 3}px)`);
