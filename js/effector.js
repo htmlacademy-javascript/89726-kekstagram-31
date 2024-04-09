@@ -18,7 +18,7 @@ sliderElement.style.display = 'none';
 form.dataset.effect = 'none';
 
 sliderNode.noUiSlider.on('update', (values, handle) => {
-  effectLevel.value = values[handle];
+  effectLevel.value = parseFloat(values[handle]).toFixed(1);
 
   const effect = document.querySelector('.effects__radio:checked').value;
   switch (effect) {
