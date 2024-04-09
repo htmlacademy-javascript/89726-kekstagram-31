@@ -1,4 +1,4 @@
-import { shuffleArray } from './util.js';
+import { shuffleArray, debounce } from './util.js';
 
 const RANDOM_FILTER_COULT = 10;
 
@@ -80,9 +80,9 @@ function handlePhotoFilters() {
   photos = Array.from(picturesContainer.querySelectorAll('.picture'));
   showFilters();
 
-  defaultFilter.addEventListener('click', handleDefaultFilter);
-  randomFilter.addEventListener('click', handleRandomFilter);
-  discussedFilter.addEventListener('click', handleDiscussedFilter);
+  defaultFilter.addEventListener('click', debounce(handleDefaultFilter));
+  randomFilter.addEventListener('click', debounce(handleRandomFilter));
+  discussedFilter.addEventListener('click', debounce(handleDiscussedFilter));
 }
 
 export { handlePhotoFilters };
