@@ -75,7 +75,7 @@ function validateHashTags() {
     return true;
   }
 
-  const hashTags = hashTagsInput.value.trim().split(' ');
+  const hashTags = hashTagsInput.value.split(' ').filter((elm) => elm);
 
   if (hashTags.length > MAX_HASHTAGS_COUNT) {
     hashTagsErrorMessage = `нельзя указать больше ${MAX_HASHTAGS_COUNT} хэштегов`;
