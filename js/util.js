@@ -27,4 +27,14 @@ function shuffleArray(array) {
   return array;
 }
 
-export {generateRandomInteger, getRandomArrayElement, isEscKey, showAlert, shuffleArray};
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+
+export {generateRandomInteger, getRandomArrayElement, isEscKey, showAlert, shuffleArray, debounce};

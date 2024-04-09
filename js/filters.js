@@ -1,4 +1,4 @@
-import { shuffleArray } from './util.js';
+import { shuffleArray, debounce } from './util.js';
 
 const RANDOM_FILTER_COULT = 10;
 
@@ -10,14 +10,27 @@ const picturesContainer = document.querySelector('.pictures');
 
 let photos = [];
 
-window.addEventListener('load', showFilters);
-
 function showFilters() {
   filters.classList.remove('img-filters--inactive');
 }
 
+function makeFilterActive(filter) {
+  makeFiltersInactive();
+  const className = filter.className;
+  filter.classList.add(`${className}--active`);
+}
+
+function makeFiltersInactive() {
+  const filterList = [defaultFilter,randomFilter, discussedFilter];
+  filterList.forEach((filter) => {
+    const className = filter.classList[0];
+    filter.classList.remove(`${className}--active`);
+  });
+}
+
 function handleDefaultFilter() {
   resetHiddenPhotos();
+  makeFilterActive(defaultFilter);
   replacePhotos(photos);
 }
 
@@ -32,6 +45,7 @@ function replacePhotos(photoList) {
 }
 
 function handleRandomFilter() {
+  makeFilterActive(randomFilter);
   const photosCopy = photos.slice();
   const randomPhotos = shuffleArray(photosCopy).slice(0, RANDOM_FILTER_COULT);
 
@@ -43,6 +57,7 @@ function handleRandomFilter() {
 }
 
 function handleDiscussedFilter() {
+  makeFilterActive(discussedFilter);
   resetHiddenPhotos();
   const photoElements = Array.from(picturesContainer.querySelectorAll('.picture'));
 
@@ -63,10 +78,11 @@ function resetHiddenPhotos() {
 
 function handlePhotoFilters() {
   photos = Array.from(picturesContainer.querySelectorAll('.picture'));
+  showFilters();
 
-  defaultFilter.addEventListener('click', handleDefaultFilter);
-  randomFilter.addEventListener('click', handleRandomFilter);
-  discussedFilter.addEventListener('click', handleDiscussedFilter);
+  defaultFilter.addEventListener('click', debounce(handleDefaultFilter));
+  randomFilter.addEventListener('click', debounce(handleRandomFilter));
+  discussedFilter.addEventListener('click', debounce(handleDiscussedFilter));
 }
 
 export { handlePhotoFilters };

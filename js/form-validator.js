@@ -75,7 +75,7 @@ function validateHashTags() {
     return true;
   }
 
-  const hashTags = hashTagsInput.value.split(' ');
+  const hashTags = hashTagsInput.value.split(' ').filter((elm) => elm);
 
   if (hashTags.length > MAX_HASHTAGS_COUNT) {
     hashTagsErrorMessage = `нельзя указать больше ${MAX_HASHTAGS_COUNT} хэштегов`;
@@ -123,6 +123,10 @@ const unblockSubmitButton = () => {
   submitBtn.textContent = SubmitButtonText.IDLE;
 };
 
+function clearError(){
+  document.querySelector('.pristine-error').remove();
+}
+
 const setUserFormSubmit = (onSuccess, onError) => {
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
@@ -130,6 +134,7 @@ const setUserFormSubmit = (onSuccess, onError) => {
     const isValid = pristine.validate();
     if (isValid) {
       blockSubmitButton();
+      clearError();
       sendData(new FormData(evt.target))
         .then(onSuccess)
         .catch(onError)

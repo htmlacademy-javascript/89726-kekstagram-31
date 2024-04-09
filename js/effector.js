@@ -1,10 +1,11 @@
-const imagePreview = document.querySelector('.img-upload__preview');
+const imagePreview = document.querySelector('.img-upload__preview img');
 const effectLevel = document.querySelector('.effect-level__value');
 const effectList = document.querySelector('.effects__list');
 const sliderElement = document.querySelector('.img-upload__effect-level');
 const form = document.querySelector('.img-upload__form');
+const sliderNode = sliderElement.querySelector('.effect-level__slider');
 
-noUiSlider.create(sliderElement, {
+noUiSlider.create(sliderNode, {
   start: 1,
   step: 0.1,
   range: {
@@ -16,8 +17,8 @@ noUiSlider.create(sliderElement, {
 sliderElement.style.display = 'none';
 form.dataset.effect = 'none';
 
-sliderElement.noUiSlider.on('update', (values, handle) => {
-  effectLevel.value = values[handle];
+sliderNode.noUiSlider.on('update', (values, handle) => {
+  effectLevel.value = parseFloat(values[handle]);
 
   const effect = document.querySelector('.effects__radio:checked').value;
   switch (effect) {
@@ -28,7 +29,7 @@ sliderElement.noUiSlider.on('update', (values, handle) => {
       updateEffect(`sepia(${effectLevel.value})`);
       break;
     case 'marvin':
-      updateEffect(`invert(${effectLevel.value * 100}%)`);
+      updateEffect(`invert(${100 - effectLevel.value}%)`);
       break;
     case 'phobos':
       updateEffect(`blur(${effectLevel.value * 3}px)`);
@@ -51,7 +52,7 @@ effectList.addEventListener('change', (evt) => {
     sliderElement.style.display = 'block';
   }
 
-  sliderElement.noUiSlider.set(1);
+  sliderNode.noUiSlider.set(1);
 });
 
 function updateEffect(value) {
