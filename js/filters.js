@@ -10,31 +10,25 @@ const picturesContainer = document.querySelector('.pictures');
 
 let photos = [];
 
-function showFilters() {
+const showFilters = () => {
   filters.classList.remove('img-filters--inactive');
-}
+};
 
-function makeFilterActive(filter) {
-  makeFiltersInactive();
-  const className = filter.className;
-  filter.classList.add(`${className}--active`);
-}
-
-function makeFiltersInactive() {
+const makeFiltersInactive = () => {
   const filterList = [defaultFilter,randomFilter, discussedFilter];
   filterList.forEach((filter) => {
     const className = filter.classList[0];
     filter.classList.remove(`${className}--active`);
   });
-}
+};
 
-function handleDefaultFilter() {
-  resetHiddenPhotos();
-  makeFilterActive(defaultFilter);
-  replacePhotos(photos);
-}
+const makeFilterActive = (filter) => {
+  makeFiltersInactive();
+  const className = filter.className;
+  filter.classList.add(`${className}--active`);
+};
 
-function replacePhotos(photoList) {
+const replacePhotos = (photoList) => {
   photoList.forEach((photoElement) => {
     picturesContainer.removeChild(photoElement);
   });
@@ -42,9 +36,21 @@ function replacePhotos(photoList) {
   photoList.forEach((photoElement) => {
     picturesContainer.appendChild(photoElement);
   });
-}
+};
 
-function handleRandomFilter() {
+const resetHiddenPhotos = () => {
+  photos.forEach((photoElement) => {
+    photoElement.classList.remove('hidden');
+  });
+};
+
+const handleDefaultFilter = () => {
+  resetHiddenPhotos();
+  makeFilterActive(defaultFilter);
+  replacePhotos(photos);
+};
+
+const handleRandomFilter = () => {
   makeFilterActive(randomFilter);
   const photosCopy = photos.slice();
   const randomPhotos = shuffleArray(photosCopy).slice(0, RANDOM_FILTER_COULT);
@@ -54,9 +60,9 @@ function handleRandomFilter() {
       photoElement.classList.add('hidden');
     }
   });
-}
+};
 
-function handleDiscussedFilter() {
+const handleDiscussedFilter = () => {
   makeFilterActive(discussedFilter);
   resetHiddenPhotos();
   const photoElements = Array.from(picturesContainer.querySelectorAll('.picture'));
@@ -68,21 +74,15 @@ function handleDiscussedFilter() {
   });
 
   replacePhotos(photoElements);
-}
+};
 
-function resetHiddenPhotos() {
-  photos.forEach((photoElement) => {
-    photoElement.classList.remove('hidden');
-  });
-}
-
-function handlePhotoFilters() {
+const handlePhotoFilters = () => {
   photos = Array.from(picturesContainer.querySelectorAll('.picture'));
   showFilters();
 
   defaultFilter.addEventListener('click', debounce(handleDefaultFilter));
   randomFilter.addEventListener('click', debounce(handleRandomFilter));
   discussedFilter.addEventListener('click', debounce(handleDiscussedFilter));
-}
+};
 
 export { handlePhotoFilters };

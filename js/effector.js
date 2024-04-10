@@ -17,6 +17,17 @@ noUiSlider.create(sliderNode, {
 sliderElement.style.display = 'none';
 form.dataset.effect = 'none';
 
+const updateEffect = (value) => {
+  imagePreview.style.filter = value;
+  form.dataset.effect = value;
+};
+
+const resetEffects = () => {
+  sliderElement.style.display = 'none';
+  imagePreview.style.filter = 'none';
+  form.dataset.effect = 'none';
+};
+
 sliderNode.noUiSlider.on('update', (values, handle) => {
   effectLevel.value = parseFloat(values[handle]);
 
@@ -54,16 +65,5 @@ effectList.addEventListener('change', (evt) => {
 
   sliderNode.noUiSlider.set(1);
 });
-
-function updateEffect(value) {
-  imagePreview.style.filter = value;
-  form.dataset.effect = value;
-}
-
-function resetEffects() {
-  sliderElement.style.display = 'none';
-  imagePreview.style.filter = 'none';
-  form.dataset.effect = 'none';
-}
 
 export {resetEffects};

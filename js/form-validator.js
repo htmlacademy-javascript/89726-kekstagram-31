@@ -1,15 +1,15 @@
 import { sendData } from './api';
 
-const uploadForm = document.querySelector('.img-upload__form');
-const hashTagsInput = uploadForm.querySelector('.text__hashtags');
-const commentInput = uploadForm.querySelector('.text__description');
-const submitBtn = uploadForm.querySelector('.img-upload__submit');
-
 const MAX_COMMENT_LENGTH = 140;
 const MIN_COMMENT_LENGTH = 0;
 const MAX_HASHTAGS_COUNT = 5;
 const MAX_HASHTAG_LENGTH = 20;
 const MIN_HASHTAG_LENGTH = 1;
+
+const uploadForm = document.querySelector('.img-upload__form');
+const hashTagsInput = uploadForm.querySelector('.text__hashtags');
+const commentInput = uploadForm.querySelector('.text__description');
+const submitBtn = uploadForm.querySelector('.img-upload__submit');
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
@@ -24,43 +24,41 @@ const pristine = new Pristine(uploadForm, {
 
 let hashTagsErrorMessage = '';
 
-function getHashTagsValidationErrorMessage() {
-  return hashTagsErrorMessage;
-}
+const getHashTagsValidationErrorMessage = () => hashTagsErrorMessage;
 
-function startsWithHash(hashTag) {
+const startsWithHash = (hashTag) => {
   if (!hashTag.startsWith('#')) {
     hashTagsErrorMessage = 'хэштег должен начинаться с символа #';
     return false;
   }
   return true;
-}
+};
 
-function isLongerThanMin(hashTag) {
+const isLongerThanMin = (hashTag) => {
   if (hashTag.length === MIN_HASHTAG_LENGTH) {
     hashTagsErrorMessage = `хэштег должен содержать более ${MIN_HASHTAG_LENGTH} символа`;
     return false;
   }
   return true;
-}
+};
 
-function isShorterThanMax(hashTag) {
+const isShorterThanMax = (hashTag) => {
   if (hashTag.length > MAX_HASHTAG_LENGTH) {
     hashTagsErrorMessage = `хэштег не может быть более ${MAX_HASHTAG_LENGTH} символов`;
     return false;
   }
   return true;
-}
+};
 
-function containsOnlyLettersAndNumbers(hashTag) {
+const containsOnlyLettersAndNumbers = (hashTag) => {
   if (!/^#[a-zA-Zа-яА-Я0-9]*$/.test(hashTag)) {
     hashTagsErrorMessage = 'хэштег может содержать только буквы и цифры';
     return false;
   }
   return true;
-}
+};
 
-function isUnique(hashTag, hashTagsSet) {
+const isUnique = (hashTag, hashTagsSet) => {
   const lowerCaseHashTag = hashTag.toLowerCase();
   if (hashTagsSet.has(lowerCaseHashTag)) {
     hashTagsErrorMessage = 'хэштег должен быть уникальным';
@@ -68,9 +66,9 @@ function isUnique(hashTag, hashTagsSet) {
   }
   hashTagsSet.add(lowerCaseHashTag);
   return true;
-}
+};
 
-function validateHashTags() {
+const validateHashTags = () => {
   if (hashTagsInput.value === '') {
     return true;
   }
@@ -95,11 +93,9 @@ function validateHashTags() {
   }
 
   return true;
-}
+};
 
-function validateComment() {
-  return commentInput.value.length >= MIN_COMMENT_LENGTH && commentInput.value.length <= MAX_COMMENT_LENGTH;
-}
+const validateComment = () => commentInput.value.length >= MIN_COMMENT_LENGTH && commentInput.value.length <= MAX_COMMENT_LENGTH;
 
 pristine.addValidator(
   commentInput,
@@ -123,9 +119,7 @@ const unblockSubmitButton = () => {
   submitBtn.textContent = SubmitButtonText.IDLE;
 };
 
-function clearError(){
-  document.querySelector('.pristine-error').remove();
-}
+const clearError = () => document.querySelector('.pristine-error').remove();
 
 const setUserFormSubmit = (onSuccess, onError) => {
   uploadForm.addEventListener('submit', (evt) => {

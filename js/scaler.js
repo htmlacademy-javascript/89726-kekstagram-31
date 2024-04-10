@@ -17,7 +17,7 @@ controlSmaller.addEventListener('click', () => {
   if (currentScale > MIN_SCALE) {
     currentScale -= SCALE_STEP;
     scaleValue.value = `${currentScale}%`;
-    imgPreview.style.transform = `scale(${currentScale / 100})`;
+    imgPreview.style.transform = `scale(${currentScale / MAX_SCALE})`;
     form.dataset.scaleControlValue = scaleValue.value;
   }
 });
@@ -27,15 +27,15 @@ controlBigger.addEventListener('click', () => {
   if (currentScale < MAX_SCALE) {
     currentScale += SCALE_STEP;
     scaleValue.value = `${currentScale}%`;
-    imgPreview.style.transform = `scale(${currentScale / 100})`;
+    imgPreview.style.transform = `scale(${currentScale / MAX_SCALE})`;
     form.dataset.scaleControlValue = scaleValue.value;
   }
 });
 
-function resetImgScalerSetting() {
+const resetImgScalerSetting = () => {
   imgPreview.style.transform = '';
   scaleValue.value = `${DEFAULT_SCALE}%`;
   form.dataset.scaleControlValue = scaleValue.value;
-}
+};
 
 export {resetImgScalerSetting};
