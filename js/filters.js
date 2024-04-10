@@ -14,18 +14,18 @@ const showFilters = () => {
   filters.classList.remove('img-filters--inactive');
 };
 
-const makeFilterActive = (filter) => {
-  makeFiltersInactive();
-  const className = filter.className;
-  filter.classList.add(`${className}--active`);
-};
-
 const makeFiltersInactive = () => {
   const filterList = [defaultFilter,randomFilter, discussedFilter];
   filterList.forEach((filter) => {
     const className = filter.classList[0];
     filter.classList.remove(`${className}--active`);
   });
+};
+
+const makeFilterActive = (filter) => {
+  makeFiltersInactive();
+  const className = filter.className;
+  filter.classList.add(`${className}--active`);
 };
 
 const replacePhotos = (photoList) => {
@@ -35,6 +35,12 @@ const replacePhotos = (photoList) => {
 
   photoList.forEach((photoElement) => {
     picturesContainer.appendChild(photoElement);
+  });
+};
+
+const resetHiddenPhotos = () => {
+  photos.forEach((photoElement) => {
+    photoElement.classList.remove('hidden');
   });
 };
 
@@ -69,12 +75,6 @@ const handleDiscussedFilter = () => {
 
   replacePhotos(photoElements);
 };
-
-function resetHiddenPhotos() {
-  photos.forEach((photoElement) => {
-    photoElement.classList.remove('hidden');
-  });
-}
 
 const handlePhotoFilters = () => {
   photos = Array.from(picturesContainer.querySelectorAll('.picture'));
