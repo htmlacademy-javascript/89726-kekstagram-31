@@ -14,23 +14,23 @@ const commentFragment = document.createDocumentFragment();
 let displayedcommentCount = 0;
 
 
-function onDocumentKeydown(evt) {
+const onDocumentKeydown = (evt) => {
   if (isEscKey(evt)) {
     evt.preventDefault();
     closeBigPicture();
   }
-}
+};
 
-function closeBigPicture() {
+const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   bigPicture.querySelector('.social__comment-count').classList.remove('hidden');
   bigPicture.querySelector('.social__comments-loader').classList.remove('hidden');
   displayedcommentCount = 0;
-}
+};
 
-function openBigPicture() {
+const openBigPicture = () => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
 
@@ -38,9 +38,9 @@ function openBigPicture() {
   pictureCancelBtn.addEventListener('click', () => {
     closeBigPicture();
   });
-}
+};
 
-function getCommentsChunk(counterStep) {
+const getCommentsChunk = (counterStep) => {
   const commentsNodes = bigPicture.querySelectorAll('.social__comment');
   const comments = Array.from(commentsNodes).slice(displayedcommentCount, displayedcommentCount + counterStep);
 
@@ -48,9 +48,9 @@ function getCommentsChunk(counterStep) {
     comments,
     commentsNodes
   };
-}
+};
 
-function showComments(counterStep) {
+const showComments = (counterStep) => {
   const { comments } = getCommentsChunk(counterStep);
 
   comments.forEach((comment) => {
@@ -58,14 +58,14 @@ function showComments(counterStep) {
     displayedcommentCount ++;
   });
   updateCommentsCount();
-}
+};
 
-function onCommentsLoaderClick() {
+const onCommentsLoaderClick = () => {
   showComments(COMMENT_LOAD_STEP);
   updateCommentsCount(displayedcommentCount);
-}
+};
 
-function updateCommentsCount(counterStep) {
+const updateCommentsCount = (counterStep) => {
   const { commentsNodes } = getCommentsChunk(counterStep);
 
   bigPicture.querySelector('.social__comment-shown-count').textContent = displayedcommentCount;
@@ -73,9 +73,9 @@ function updateCommentsCount(counterStep) {
   if (displayedcommentCount >= commentsNodes.length) {
     hideLoader();
   }
-}
+};
 
-function prepareBigPictureContent({url, likes, comments, description }) {
+const prepareBigPictureContent = ({url, likes, comments, description }) => {
   bigPicture.querySelector('.big-picture__img img').src = url;
   bigPicture.querySelector('.likes-count').textContent = likes;
   bigPicture.querySelector('.social__comment-total-count').textContent = comments.length;
@@ -89,21 +89,21 @@ function prepareBigPictureContent({url, likes, comments, description }) {
 
   fillBigPictureCommentsTemplate(comments);
   commentLoader.addEventListener('click', onCommentsLoaderClick);
-}
+};
 
-function hideLoader() {
+const hideLoader = () => {
   bigPicture.querySelector('.social__comments-loader').classList.add('hidden');
-}
+};
 
-function fillBigPictureCommentsTemplate(commentsData) {
+const fillBigPictureCommentsTemplate = (commentsData) => {
   commentsData.forEach((item) => {
     const commentsTemplate = createComment(item);
     commentFragment.appendChild(commentsTemplate);
   });
   bigPicture.querySelector('.social__comments').appendChild(commentFragment);
-}
+};
 
-function createComment({id, avatar, message, name}) {
+const createComment = ({id, avatar, message, name}) => {
   const comment = commentContainer.cloneNode(true);
   comment.dataset.id = id;
   comment.querySelector('img').src = avatar;
@@ -112,9 +112,9 @@ function createComment({id, avatar, message, name}) {
   comment.classList.add('hidden');
 
   return comment;
-}
+};
 
-function renderCommments(data) {
+const renderCommments = (data) => {
   commentsContainer.textContent = '';
   const fragment = new DocumentFragment();
   data.map((comment) => {
@@ -122,9 +122,9 @@ function renderCommments(data) {
     fragment.appendChild(commentElement);
   });
   commentsContainer.appendChild(fragment);
-}
+};
 
-const handlePictureClick = (data) =>{
+const handlePictureClick = (data) => {
   picturesContainer.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('picture__img')) {
       const srcImgId = evt.target.closest('.picture').dataset.id;

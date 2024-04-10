@@ -32,10 +32,10 @@ controlBigger.addEventListener('click', () => {
   }
 });
 
-function resetImgScalerSetting() {
+const resetImgScalerSetting = () => {
   imgPreview.style.transform = '';
   scaleValue.value = `${DEFAULT_SCALE}%`;
   form.dataset.scaleControlValue = scaleValue.value;
-}
+};
 
 export {resetImgScalerSetting};

@@ -1,8 +1,8 @@
-function isMeetingInWorkingHours(startWork, endWork, startMeeting, duration) {
-  function timeToMinutes(time) {
+const isMeetingInWorkingHours = (startWork, endWork, startMeeting, duration) => {
+  const timeToMinutes = (time) => {
     const [hours, minutes] = time.split(':').map(Number);
     return hours * 60 + minutes;
-  }
+  };
 
   const startWorkInMinutes = timeToMinutes(startWork);
   const endWorkInMinutes = timeToMinutes(endWork);
@@ -10,7 +10,7 @@ function isMeetingInWorkingHours(startWork, endWork, startMeeting, duration) {
   const endMeetingInMinutes = startMeetingInMinutes + duration;
 
   return startMeetingInMinutes >= startWorkInMinutes && endMeetingInMinutes <= endWorkInMinutes;
-}
+};
 
 isMeetingInWorkingHours('08:00', '17:30', '14:00', 90);
 isMeetingInWorkingHours('8:0', '10:0', '8:0', 120);
