@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { getData } from './api.js';
 import { handlePictureClick } from './big-picture-renderer.js';
 import { renderPhotos } from './thumbnails.js';

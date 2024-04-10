@@ -1,11 +1,9 @@
 const ALERT_SHOW_TIME = 5000;
+const DELAY_TIMEOUT = 500;
 
-const generateRandomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-const getRandomArrayElement = (elements) => elements[generateRandomInteger(0, elements.length - 1)];
 function isEscKey(evt) {
   return evt.key === 'Escape' || evt.keyCode === 27;
 }
-
 
 const showAlert = (message) => {
   const errorTemplate = document.querySelector('#data-error').content.firstElementChild;
@@ -27,7 +25,7 @@ function shuffleArray(array) {
   return array;
 }
 
-function debounce (callback, timeoutDelay = 500) {
+function debounce (callback, timeoutDelay = DELAY_TIMEOUT) {
   let timeoutId;
 
   return (...rest) => {
@@ -36,5 +34,4 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-
-export {generateRandomInteger, getRandomArrayElement, isEscKey, showAlert, shuffleArray, debounce};
+export {isEscKey, showAlert, shuffleArray, debounce};

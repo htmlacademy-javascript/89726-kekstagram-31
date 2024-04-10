@@ -1,15 +1,15 @@
 import { sendData } from './api';
 
-const uploadForm = document.querySelector('.img-upload__form');
-const hashTagsInput = uploadForm.querySelector('.text__hashtags');
-const commentInput = uploadForm.querySelector('.text__description');
-const submitBtn = uploadForm.querySelector('.img-upload__submit');
-
 const MAX_COMMENT_LENGTH = 140;
 const MIN_COMMENT_LENGTH = 0;
 const MAX_HASHTAGS_COUNT = 5;
 const MAX_HASHTAG_LENGTH = 20;
 const MIN_HASHTAG_LENGTH = 1;
+
+const uploadForm = document.querySelector('.img-upload__form');
+const hashTagsInput = uploadForm.querySelector('.text__hashtags');
+const commentInput = uploadForm.querySelector('.text__description');
+const submitBtn = uploadForm.querySelector('.img-upload__submit');
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
